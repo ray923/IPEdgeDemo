@@ -29,3 +29,7 @@ Application Overview:
 Client APP---React client layer
 Controller---Logic layer
 Data---Data Access, Model, service layer
+
+How to Run:
+open the .sln file in Visual Studio
+Run the project
