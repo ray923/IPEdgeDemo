@@ -19,3 +19,13 @@ Some improvement still working on:
 3.Add page index and page size function.
 
 4.Using ado.net or entity framework to using SQL instead of LINQ(I used the one LINQ in the app and plan to instead of it.)
+
+DataBase:
+Using Google Cloud Platform Cloud SQL:
+
+ip:35.244.103.152
+
+Application Overview:
+Client APP---React client layer
+Controller---Logic layer
+Data---Data Access, Model, service layer
