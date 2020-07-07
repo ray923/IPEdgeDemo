@@ -10,15 +10,14 @@ Have done:
 
 5.Used bootstrap to implement the mobile responsive.
 
-Some improvement still working on:
+6.Add page index and page size function.
 
+Some improvement still working on:
 1. Inner join the Employee Table and Role table to show the employee's role name.
 
 2.When update and add the employee add the role drop down function into the page.
 
-3.Add page index and page size function.
-
-4.Using ado.net or entity framework to using SQL instead of LINQ(I used the one LINQ in the app and plan to instead of it.)
+3.Using ado.net or entity framework to using SQL instead of LINQ(I used the one LINQ in the app and plan to instead of it.)
 
 DataBase:
 Using Google Cloud Platform Cloud SQL:
@@ -31,5 +30,9 @@ Controller---Logic layer
 Data---Data Access, Model, service layer
 
 How to Run:
-open the .sln file in Visual Studio
-Run the project
+1.open the .sln file in Visual Studio
+2.Run the project
+or
+1.Open the folder in VScode
+2.command: dotnet run in Terminal
+
