@@ -29,6 +29,19 @@ namespace IPedgeProject.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("{pageIndex}/{pagesize}")]
+        public IActionResult GetEmployees(int pageIndex,int pagesize)
+        {
+            try
+            {
+                PagedEmployees allEmployees = _service.GetPagedEmployee(pageIndex,pagesize);
+                return Ok(allEmployees);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpGet("SingleEmployee/{id}")]
         public IActionResult GetEmploeebyNumber(int id)
         {

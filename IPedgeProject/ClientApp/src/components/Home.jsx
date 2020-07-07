@@ -5,32 +5,34 @@ export class Home extends Component {
     constructor(props) {
         super(props);
 
-        this.onTripUpdate = this.onTripUpdate.bind(this);
-        this.onTripDelete = this.onTripDelete.bind(this);
+        this.onEmployeeUpdate = this.onEmployeeUpdate.bind(this);
+        this.onEmployeeDelete = this.onEmployeeDelete.bind(this);
+        this.populatePagedEmployeesData = this.populatePagedEmployeesData.bind(this);
 
         this.state = {
             employees: [],
             loading: true,
             failed: false,
-            error: ''
+            error: '',
+            pagesize: 10
         }
     }
 
     componentDidMount() {
-        this.populateTripsData();
+        this.populatePagedEmployeesData(1);
     }
 
-    onTripUpdate(id) {
+    onEmployeeUpdate(id) {
         const { history } = this.props;
         history.push('/update/' + id);
     }
 
-    onTripDelete(id) {
+    onEmployeeDelete(id) {
         const { history } = this.props;
         history.push('/delete/' + id);
     }
 
-    populateTripsData() {
+    populateEmployeeData() {
         axios.get("/Employee").then(result => {
             const response = result.data;
             this.setState({ employees: response, loading: false, failed: false, error: "" });
@@ -39,8 +41,57 @@ export class Home extends Component {
         });
     }
 
+    populatePagedEmployeesData(pageindex) {
+        axios.get("/Employee/" + pageindex + "/" + this.state.pagesize).then(result => {
+            const response = result.data;
+            this.setState({ employees: response, loading: false, failed: false, error: "" });
+        }).catch(error => {
+            this.setState({ employees: [], loading: false, failed: true, error: "Employees could not be loaded" });
+        });
+    }
+
+    renderPaged(employees){
+        let rows = [];
+        for (let i=1; i<= employees.pageCount + 1; i++)
+        {
+            rows.push(<li className="page-item"><a className="page-link" onClick={() => this.populatePagedEmployeesData(i)}>{i}</a></li>);
+        }
+        return (
+            <>
+            <nav aria-label="Page navigation example">
+                <ul className="pagination">
+                    <li className="page-item">
+                        <a className="page-link" onClick={() => this.populatePagedEmployeesData(employees.pageIndex-1 >0 ? employees.pageIndex-1 : 1)} aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span className="sr-only">Previous</span>
+                        </a>
+                    </li>
+                        {rows}
+                    <li className="page-item">
+                        <a className="page-link" onClick={() => this.populatePagedEmployeesData(employees.pageIndex + 1 >= employees.pageCount +1 ? employees.pageCount +1 : employees.pageCount)} aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span className="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div className="dropdown dropright btn-sm">
+                <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    PageSize
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a className="dropdown-item" onClick={() => this.setState({pagesize:5})}>5</a>
+                    <a className="dropdown-item" onClick={() => this.setState({pagesize:10})}>10</a>
+                    <a className="dropdown-item" onClick={() => this.setState({pagesize:50})}>50</a>
+                </div>
+            </div>
+            </>
+        )
+    }
+
     renderAllEmployeesTable(employees) {
         return (
+            <>
             <table className="table table-striped">
                 <thead>
                     <tr>
@@ -54,7 +105,7 @@ export class Home extends Component {
                 </thead>
                 <tbody>
                     {
-                        employees.map(employee => (
+                        employees.employees.map(employee => (
                             <tr key={employee.employeeID}>
                                 <td>{employee.employeeNumber}</td>
                                 <td>{employee.firstName}</td>
@@ -63,10 +114,10 @@ export class Home extends Component {
                                 <td>{employee.extension}</td>
                                 <td>
                                     <div className="form-group">
-                                        <button onClick={() => this.onTripUpdate(employee.employeeID)} className="btn btn-success">
+                                        <button onClick={() => this.onEmployeeUpdate(employee.employeeID)} className="btn btn-success">
                                             Update
                                     </button>
-                                        <button onClick={() => this.onTripDelete(employee.employeeID)} className="btn btn-danger">
+                                        <button onClick={() => this.onEmployeeDelete(employee.employeeID)} className="btn btn-danger">
                                             Delete
                                     </button>
                                     </div>
@@ -74,9 +125,10 @@ export class Home extends Component {
                             </tr>
                         ))
                     }
-
-                </tbody>
+                </tbody>                
             </table>
+            {this.renderPaged(employees)}
+            </>
         );
     }
 

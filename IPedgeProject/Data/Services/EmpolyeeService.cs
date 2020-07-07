@@ -16,6 +16,15 @@ namespace IPedgeProject.Data.Services
         {
             return _context.Employee.ToList<Employee>();
         }
+        public PagedEmployees GetPagedEmployee(int pageindex, int pagesize)
+        {
+            PagedEmployees employees = new PagedEmployees();
+            employees.TotalCount = _context.Employee.Count();
+            employees.PageIndex = pageindex;
+            employees.PageCount = employees.TotalCount/pagesize;
+            employees.Employees = _context.Employee.OrderBy(u=>u.EmployeeID).Skip(pagesize*(pageindex-1)).Take(pagesize).ToList<Employee>();
+            return employees;
+        }
         public Employee GetEmploeebyNumber(int employeeNumber)
         {
             var employee = _context.Employee.Single(u => u.EmployeeID == employeeNumber);
