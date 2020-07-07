@@ -30,5 +30,9 @@ Controller---Logic layer
 Data---Data Access, Model, service layer
 
 How to Run:
-open the .sln file in Visual Studio
-Run the project
+1.open the .sln file in Visual Studio
+2.Run the project
+or
+1.Open the folder in VScode
+2.command: dotnet run in Terminal
+
