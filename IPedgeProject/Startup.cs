@@ -25,8 +25,8 @@ namespace IPedgeProject
         public void ConfigureServices(IServiceCollection services)
         {
             // Dbconnection
-            var connection = @"Server=35.244.103.152;Database=IPEdge-Demo;User ID=sqlserver;Password=IPEdge@0701;";
-            services.AddDbContext<EmpolyeeDbContext>(options => options.UseSqlServer(connection));
+            //var connection = @"Server=35.244.103.152;Database=IPEdge-Demo;User ID=sqlserver;Password=IPEdge@0701;";
+            services.AddDbContext<EmpolyeeDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IPEdgeDataBase")));
 
             services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson();
