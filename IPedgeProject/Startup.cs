@@ -67,11 +67,11 @@ namespace IPedgeProject
       // Dbconnection
       string projectConnectString = Configuration.GetConnectionString("IPEdgeDataBase");
       services.Configure<DbConfig>(config => config.ConnectionString = projectConnectString);
-      var dbconfig = services.BuildServiceProvider().GetService<IOptions<DbConfig>>().Value;
+      //var dbconfig = BuildServiceProvider().GetService<IOptions<DbConfig>>().Value;
 
       services.AddDbContextPool<ProjectContext>(options =>
       {
-        options.UseSqlServer(dbconfig.ConnectionString);
+        options.UseSqlServer(projectConnectString);
       });
 
       services.AddHttpContextAccessor();
@@ -93,12 +93,12 @@ namespace IPedgeProject
 
       // TO DO add some third party useful function
       // services.Configure<ApiSettings>(Configuration);
-			// services.Configure<AttachmentSetting>(options => Configuration.GetSection("AttachmentSetting").Bind(options));
-			// services.Configure<EmailConfig>(options => Configuration.GetSection("Email").Bind(options));
-			// services.Configure<EmailSetting>(options => Configuration.GetSection("EmailSetting").Bind(options));
-			// services.Configure<GmailApiSetting>(options => Configuration.GetSection("GmailApiSetting").Bind(options));
+      // services.Configure<AttachmentSetting>(options => Configuration.GetSection("AttachmentSetting").Bind(options));
+      // services.Configure<EmailConfig>(options => Configuration.GetSection("Email").Bind(options));
+      // services.Configure<EmailSetting>(options => Configuration.GetSection("EmailSetting").Bind(options));
+      // services.Configure<GmailApiSetting>(options => Configuration.GetSection("GmailApiSetting").Bind(options));
 
-      services.AddTransient<IEmpolyeeService, EmpolyeeService>();
+      services.AddTransient<IEmpolyeeService, EmpolyeeService>().AddSingleton<ProjectConnection>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
