@@ -66,8 +66,7 @@ namespace IPedgeProject
       });
       // Dbconnection
       string projectConnectString = Configuration.GetConnectionString("IPEdgeDataBase");
-      services.Configure<DbConfig>(config => config.ConnectionString = projectConnectString);
-      //var dbconfig = BuildServiceProvider().GetService<IOptions<DbConfig>>().Value;
+      //services.Configure<DbConfig>(config => config.ConnectionString = projectConnectString);
 
       services.AddDbContextPool<ProjectContext>(options =>
       {
