@@ -3,6 +3,7 @@ using IPedgeProject.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IPedgeProject.Controllers
 {
@@ -43,9 +44,9 @@ namespace IPedgeProject.Controllers
             }
         }
         [HttpGet("SingleEmployee/{id}")]
-        public IActionResult GetEmploeebyNumber(int id)
+        public async Task<IActionResult> GetEmploeebyNumber(int id)
         {
-            var employee = _service.GetEmploeebyNumber(id);
+            var employee = await _service.GetEmploeebyNumber(id);
             return Ok(employee);
         }
         [HttpPost("AddEmployee")]

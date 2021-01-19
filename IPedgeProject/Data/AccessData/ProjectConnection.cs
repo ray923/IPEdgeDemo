@@ -6,7 +6,7 @@ namespace IPedgeProject.Data.AccessData
 	{
 		private readonly IConfiguration _config;
 
-		public ProjectConnection(IConfiguration config) : base(config, "ConnectionStrings")
+		public ProjectConnection(IConfiguration config) : base(config, "IPEdgeDataBase")
 		{
 			_config = config;
 		}

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace IPedgeProject.Data.Services
 {
@@ -6,7 +7,7 @@ namespace IPedgeProject.Data.Services
     {
         List<Employee> GetAllEmployee();
         PagedEmployees GetPagedEmployee(int pageindex, int pagesize);
-        Employee GetEmploeebyNumber(int employeeNumber);
+        Task<Employee> GetEmploeebyNumber(int employeeNumber);
         void UpdateEmpolyee(int EmpolyeeNumber, Employee employee);
         void DeleteEmployee(int EmpolyeeNumber);
         void AddEmployee(Employee employee);

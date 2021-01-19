@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace IPedgeProject.Data.Services
 {
@@ -15,8 +16,12 @@ namespace IPedgeProject.Data.Services
             _dbContext = dbContext;
         }
         public List<Employee> GetAllEmployee()
-        {
-            return _dbContext.Employee.ToList<Employee>();
+    {
+            // EF Linq GET list
+            var employeeList = _dbContext.Employee.ToList<Employee>();
+            // Dapper sql GET list
+            var employeeList_sql = _dbConnection.Query<Employee>("select * from dbo.employee");
+            return employeeList;
         }
         public PagedEmployees GetPagedEmployee(int pageindex, int pagesize)
         {
@@ -27,9 +32,16 @@ namespace IPedgeProject.Data.Services
             employees.Employees = _dbContext.Employee.OrderBy(u=>u.EmployeeID).Skip(pagesize*(pageindex-1)).Take(pagesize).ToList<Employee>();
             return employees;
         }
-        public Employee GetEmploeebyNumber(int employeeNumber)
+        public async Task<Employee> GetEmploeebyNumber(int employeeNumber)
         {
+            // EF Linq GET object
             var employee = _dbContext.Employee.Single(u => u.EmployeeID == employeeNumber);
+            // Dapper sql GET object with param
+            var param = new
+            {
+                id = employeeNumber
+            };
+            var employee_sql = await _dbConnection.QuerySingle<Employee>("select * from dbo.employee where EmployeeId = @id", param);
             return employee;
         }
         public void UpdateEmpolyee(int id, Employee employee)
