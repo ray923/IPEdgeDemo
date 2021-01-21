@@ -50,12 +50,20 @@ namespace IPedgeProject.Data.Services
             _dbContext.Employee.Update(employee);
             _dbContext.SaveChanges();
         }
-        public void DeleteEmployee(int EmpolyeeNumber)
+        public async void DeleteEmployee(int EmpolyeeNumber)
         {
-            var employee = new Employee { EmployeeID = EmpolyeeNumber };
-            _dbContext.Employee.Attach(employee);
-            _dbContext.Employee.Remove(employee);
-            _dbContext.SaveChanges();
+            // Linq delete function
+            // var employee = new Employee { EmployeeID = EmpolyeeNumber };
+            // _dbContext.Employee.Attach(employee);
+            // _dbContext.Employee.Remove(employee);
+            // _dbContext.SaveChanges();
+            
+            // SP delete function
+            var param = new
+            {
+                EmployeeId = EmpolyeeNumber
+            };
+            await _dbConnection.StoredProcedure("usp_DeleteEmployee", param);
         }
         public void AddEmployee(Employee employee)
         {
