@@ -31,11 +31,11 @@ namespace IPedgeProject.Controllers
             }
         }
         [HttpGet("{pageIndex}/{pagesize}")]
-        public IActionResult GetEmployees(int pageIndex,int pagesize)
+        public async Task<IActionResult> GetEmployees(int pageIndex,int pagesize)
         {
             try
             {
-                PagedEmployees allEmployees = _service.GetPagedEmployee(pageIndex,pagesize);
+                var allEmployees = await _service.GetPagedEmployee(pageIndex,pagesize);
                 return Ok(allEmployees);
             }
             catch (Exception ex)

@@ -6,7 +6,7 @@ namespace IPedgeProject.Data.Services
     public interface IEmpolyeeService
     {
         List<Employee> GetAllEmployee();
-        PagedEmployees GetPagedEmployee(int pageindex, int pagesize);
+        Task<PagedEmployees> GetPagedEmployee(int pageindex, int pagesize);
         Task<Employee> GetEmploeebyNumber(int employeeNumber);
         void UpdateEmpolyee(int EmpolyeeNumber, Employee employee);
         void DeleteEmployee(int EmpolyeeNumber);

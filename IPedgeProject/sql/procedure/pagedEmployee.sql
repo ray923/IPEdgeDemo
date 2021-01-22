@@ -17,12 +17,12 @@ ALTER PROCEDURE [dbo].[usp_GetPagedEmployee]
     @PageIndex        int = 1,                -- 当前页码
     @Where            nvarchar(3000) = '',        -- 查询条件
     @OrderBy        nvarchar(200) = 'EmployeeID',            -- 排序字段名 最好为唯一主键
-    @OrderType        int = 1                    -- 排序类型 1:降序 其它为升序
+    @OrderType        int = 1,                    -- 排序类型 1:降序 其它为升序
+    @TotalPage        int OUTPUT,
+    @TotalRecord      int OUTPUT
 )
 
 AS
-    DECLARE @TotalRecord int
-    DECLARE @TotalPage int
     DECLARE @CurrentPageSize int
     DECLARE @TotalRecordForPageIndex int
     declare @CountSql nvarchar(4000)

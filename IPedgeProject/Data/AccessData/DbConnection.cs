@@ -74,25 +74,13 @@ namespace IPedgeProject.Data.AccessData
 				return await sqlConn.QuerySingleOrDefaultAsync<T>(sql, param);
 			}
     }
-		//execute multiple queries within the same command and map results.
-    public async Task<List<object>> QueryMultiple<T>(string sql, object param = null)
-    {
-      using (var sqlConn = Create())
-      {
-        List<object> resultList = new List<object>();
-        await sqlConn.OpenAsync();
-        var multiResult = await sqlConn.QueryMultipleAsync(sql);
-        while (!multiResult.IsConsumed)
-        {
-          var result = multiResult.Read().ToList()[0];
-          if (result != null)
-          {
-            resultList.Add(result);
-          }
-        }
-        return resultList;
-      }
-		}
+		internal async Task StoredProcedure(string storedProcedureName, object param = null)
+		{
+			using (var sqlConn = Create())
+			{
+				await sqlConn.ExecuteAsync(storedProcedureName, param, commandType: CommandType.StoredProcedure, commandTimeout: 300);
+			}
+    }
 		//return the result, usually used to execute: SP
 		internal async Task<IEnumerable<T>> StoredProcedure<T>(string storedProcedureName, object param = null)
 		{
@@ -101,13 +89,31 @@ namespace IPedgeProject.Data.AccessData
 				return await sqlConn.QueryAsync<T>(storedProcedureName, param, commandType: CommandType.StoredProcedure, commandTimeout: 300);
 			}
 		}
-
-		internal async Task StoredProcedure(string storedProcedureName, object param = null)
-		{
-			using (var sqlConn = Create())
-			{
-				await sqlConn.ExecuteAsync(storedProcedureName, param, commandType: CommandType.StoredProcedure, commandTimeout: 300);
-			}
+		//execute multiple queries within the same command and map results.
+    public async Task<List<object>> StoredProcedureMultiple(string storedProcedureName, object param = null)
+    {
+      using (var sqlConn = Create())
+      {
+        List<object> resultList = new List<object>();
+        await sqlConn.OpenAsync();
+        var multiResult = await sqlConn.QueryMultipleAsync(storedProcedureName, param, commandType: CommandType.StoredProcedure, commandTimeout: 300);
+        while (!multiResult.IsConsumed)
+        {
+          var result = multiResult.Read().ToList();
+          if (result != null)
+          {
+            if (result.Count > 1)
+            {
+              resultList.Add(result);
+            }
+            else
+						{
+              resultList.Add(result);
+						}
+          }
+        }
+        return resultList;
+      }
 		}
 	}
 }
