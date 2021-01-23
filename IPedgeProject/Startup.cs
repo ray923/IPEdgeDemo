@@ -97,7 +97,10 @@ namespace IPedgeProject
       // services.Configure<EmailSetting>(options => Configuration.GetSection("EmailSetting").Bind(options));
       // services.Configure<GmailApiSetting>(options => Configuration.GetSection("GmailApiSetting").Bind(options));
 
-      services.AddTransient<IEmpolyeeService, EmpolyeeService>().AddSingleton<ProjectConnection>();
+      services
+        .AddTransient<IEmpolyeeService, EmpolyeeService>()
+        .AddTransient<EmployeeRepository>()
+        .AddSingleton<ProjectConnection>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
