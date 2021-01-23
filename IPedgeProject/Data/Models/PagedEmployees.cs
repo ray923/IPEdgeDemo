@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace IPedgeProject.Data
+namespace IPedgeProject.Data.Models
 {
     public class PagedEmployees
     {
