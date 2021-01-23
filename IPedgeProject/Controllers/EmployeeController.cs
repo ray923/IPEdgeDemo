@@ -1,4 +1,4 @@
-﻿using IPedgeProject.Data;
+﻿using IPedgeProject.Data.Models;
 using IPedgeProject.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;

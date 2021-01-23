@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace IPedgeProject.Data
+namespace IPedgeProject.Data.Models
 {
     public class Role
     {

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using IPedgeProject.Data.Models;
 
 namespace IPedgeProject.Data.Services
 {

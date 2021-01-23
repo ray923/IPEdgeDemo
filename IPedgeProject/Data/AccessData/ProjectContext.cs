@@ -1,3 +1,4 @@
+using IPedgeProject.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace IPedgeProject.Data.AccessData

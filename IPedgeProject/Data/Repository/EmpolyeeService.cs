@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using IPedgeProject.Data.AccessData;
+using IPedgeProject.Data.Models;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
