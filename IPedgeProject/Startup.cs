@@ -27,7 +27,7 @@ namespace IPedgeProject
         .AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true)
         .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
         .Build();
-        _env = env;
+      _env = env;
     }
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
@@ -57,7 +57,7 @@ namespace IPedgeProject
       //   services.AddMvc()
       //   .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
       //   .AddJsonOptions(options => {options.SerializerSettings.ContractResolver = new DefaultContractResolver { NamingStrategy = new CamelCaseNamingStrategy() };});
-      
+
       // cors policy
       services.AddCors(options =>
       {
@@ -74,20 +74,20 @@ namespace IPedgeProject
       });
 
       services.AddHttpContextAccessor();
-      
+
       if (!_env.IsDevelopment())
-			{
-				services.AddHttpsRedirection(options =>
-				{
-					options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-					options.HttpsPort = 443;
-				});
-			}
+      {
+        services.AddHttpsRedirection(options =>
+        {
+          options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+          options.HttpsPort = 443;
+        });
+      }
 
       // In production, the React files will be served from this directory
       services.AddSpaStaticFiles(configuration =>
       {
-          configuration.RootPath = "ClientApp/build";
+        configuration.RootPath = "ClientApp/build";
       });
 
       // TO DO add some third party useful function
@@ -103,39 +103,39 @@ namespace IPedgeProject
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostEnvironment env)
     {
+      if (env.IsDevelopment())
+      {
+        app.UseDeveloperExceptionPage();
+      }
+      else
+      {
+        app.UseExceptionHandler("/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+      }
+
+      app.UseHttpsRedirection();
+      app.UseStaticFiles();
+      app.UseSpaStaticFiles();
+
+      app.UseRouting();
+
+      app.UseEndpoints(endpoints =>
+      {
+        endpoints.MapControllerRoute(
+              name: "default",
+              pattern: "{controller}/{action=Index}/{id?}");
+      });
+
+      app.UseSpa(spa =>
+      {
+        spa.Options.SourcePath = "ClientApp";
+
         if (env.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();
+          spa.UseReactDevelopmentServer(npmScript: "start");
         }
-        else
-        {
-            app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
-        }
-
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
-        app.UseSpaStaticFiles();
-
-        app.UseRouting();
-
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllerRoute(
-                name: "default",
-                pattern: "{controller}/{action=Index}/{id?}");
-        });
-
-        app.UseSpa(spa =>
-        {
-            spa.Options.SourcePath = "ClientApp";
-
-            if (env.IsDevelopment())
-            {
-                spa.UseReactDevelopmentServer(npmScript: "start");
-            }
-        });
+      });
     }
   }
 }
