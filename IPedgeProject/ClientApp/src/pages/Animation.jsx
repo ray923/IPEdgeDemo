@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import shoePic from '../assets/airforce1.png';
 
 export default function Animation () {
 
   useEffect(()=> {
     const script =document.createElement('script');
-    script.src = require("../assets/animation");
-    script.type = "text/babel";
+    script.src = "animation.js";
     document.body.appendChild(script);
     return () => {
       document.body.removeChild(script);
     }
-  },[]);
+  });
 
   return (
     <Cardiv>
@@ -20,7 +18,7 @@ export default function Animation () {
       <div className="card">
         <div className="sneaker">
           <div className="circle"></div>
-          <img src={shoePic} alt="airforce1"/>
+          <img src={require('../assets/airforce1.png')} alt="airforce1"/>
         </div>
         <div className="info">
           <h1 className="title">Air Force one</h1>
