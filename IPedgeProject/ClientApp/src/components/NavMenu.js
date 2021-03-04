@@ -36,6 +36,9 @@ export class NavMenu extends Component {
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/create">Create</NavLink>
                 </NavItem>
+                <NavItem>
+                  <NavLink tag={Link} className="text-dark" to="/3danimation">3D-Card-Effect</NavLink>
+                </NavItem>
               </ul>
             </Collapse>
           </Container>

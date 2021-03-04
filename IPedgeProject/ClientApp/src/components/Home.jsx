@@ -54,7 +54,7 @@ export class Home extends Component {
         let rows = [];
         for (let i=1; i<= employees.pageCount + 1; i++)
         {
-            rows.push(<li className="page-item"><a className="page-link" onClick={() => this.populatePagedEmployeesData(i)}>{i}</a></li>);
+            rows.push(<li className="page-item" key={i}><a className="page-link" onClick={() => this.populatePagedEmployeesData(i)}>{i}</a></li>);
         }
         return (
             <>

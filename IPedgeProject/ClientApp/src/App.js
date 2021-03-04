@@ -5,6 +5,7 @@ import { Home } from './components/Home';
 import { Update } from './components/Update';
 import { Delete } from './components/Delete';
 import { Create } from './components/Create';
+import Animation from './pages/Animation';
 
 import './custom.css'
 
@@ -18,6 +19,7 @@ export default class App extends Component {
         <Route path='/create' component={Create} />
         <Route path='/update/:id' component={Update} />
         <Route path='/delete/:id' component={Delete} />
+        <Route path='/3danimation' component={Animation} />
       </Layout>
     );
   }

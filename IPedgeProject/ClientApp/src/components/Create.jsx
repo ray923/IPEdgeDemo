@@ -14,12 +14,12 @@ export class Create extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
-            employeeNumber: null,
+            employeeNumber: '',
             firstName: '',
             lastName: '',
-            dateJoined: null,
-            extension: null,
-            roleID: null,
+            dateJoined: '',
+            extension: '',
+            roleID: '',
         }
     }
 
