@@ -1,4 +1,9 @@
-Scenario
+# VITG Code Test
+1. Entity Framework Code First
+2. Blob
+3. Image Upload
+
+# Scenario
 This is a basic scenario designed to test your competency with the latest .net technologies. You will have 1 day to complete the scenario, at the end of which we will screen share with you to review your efforts and run through the code. 
 Create a project which: 
 •	Allows the user to upload an image 
