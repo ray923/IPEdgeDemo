@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <base href="%PUBLIC_URL%/" />
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.25.2/css/blueimp-gallery.min.css" crossorigin="anonymous">
+    <style>
+      html {
+          font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      }
+  
+      main {
+          margin: 20px;
+      }
+  
+      #gallery-note {
+          font-size: smaller
+      }
+  
+      .blueimp-gallery {
+          margin: 25px;
+          max-width: 150px;
+          padding-bottom: 150px;
+      }
+  
+      .dropzone {
+          border: 3px dashed #00a1f1;
+          background: #F0F8FF;
+          margin: 25px;
+          border-radius: 5px;
+          max-width: 400px;
+      }
+  
+      .dropzone .dz-message {
+          font-weight: 350;
+      }
+  
+      .dropzone .dz-message .note {
+          font-family: sans-serif;
+          font-size: 18px;
+          font-weight: 200;
+          display: block;
+          margin-top 1.5rem;
+      }
+  </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.1.1/min/dropzone.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-gallery/2.25.2/js/blueimp-gallery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>VITGImageUpload</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <div class="box content">
+      <hr>
+      <h2>Upload photos</h2>
+      <div>
+          <form action="/api/uploadimage/upload"
+               class="dropzone needsclick dz-clickable" 
+               id="image-upload"
+               method="post"
+               enctype="multipart/form">
+
+              <div class="dz-message needsclick">
+                  <span class="note needsclick">
+                      Drop files here or click to upload.
+                  </span>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    /* Dropzone */
+    // "imageUpload" is the camelized version of the HTML element's ID
+    Dropzone.options.imageUpload = {
+        paramName: "files", // The name that will be used to transfer the file
+        dictDefaultMessage: "Drop files here or Click to Upload",
+        addRemoveLinks: true, // Allows for cancellation of file upload and remove thumbnail
+        init: function() {
+            myDropzone = this;
+            myDropzone.on("success", function(file, response) {
+                console.log("Success");
+                myDropzone.removeFile(file);
+            });                    
+        }
+    };
+  </script>
+</html>
