@@ -1,2 +1,2 @@
 # Demos
-This is the collection of the Code test and test demo
+This is the collection of the Code tests and test demos
